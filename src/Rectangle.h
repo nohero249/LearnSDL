@@ -5,6 +5,8 @@ class Rectangle
 {
 public:
     Rectangle(const SDL_Rect& Rect) : mRect{Rect} { }
+    
+    virtual ~Rectangle() = default;
 
     void HandleEvent(SDL_Event& E)
     {
@@ -26,7 +28,7 @@ public:
 
     SDL_Color GetHoverColor() const { return HoverColor; }
 
-    void Render(SDL_Surface* Surface) const
+    virtual void Render(SDL_Surface* Surface) const
     {
         auto [r, g, b, a]{isPointerHovering ? HoverColor : mColor};
         const auto* Fmt = SDL_GetPixelFormatDetails(Surface->format);
@@ -39,7 +41,7 @@ public:
 
 private:
     SDL_Rect mRect;
-    SDL_Color mColor{255, 255, 255, 255};
+    SDL_Color mColor{255, 0, 0, 255};
     SDL_Color HoverColor{0, 0, 255, 255};
 
     bool isPointerHovering{false};

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Window.h"
 #include "Rectangle.h"
+#include "UI.h"
 
 void HandleEvent(SDL_MouseMotionEvent& Event, Window& GameWindow)
 {
@@ -29,8 +30,10 @@ int main(int, char **)
 {
     SDL_Init(SDL_INIT_VIDEO);
     Window GameWindow;
+    UI UIManager;
+
     Rectangle Rect{SDL_Rect{320, 120, 60, 60}};
-    // Rect.SetColor(255, 0, 0);
+    Rect.SetColor(SDL_Color{255, 0, 0, 255});
 
     bool IsRunning = true;
     SDL_Event Event;
@@ -41,14 +44,14 @@ int main(int, char **)
         { 
             // if (Event.type == SDL_EVENT_MOUSE_MOTION) HandleEvent(Event.motion, GameWindow); 
             // if (Event.type == SDL_EVENT_MOUSE_BUTTON_UP || SDL_EVENT_MOUSE_BUTTON_DOWN) HandleEvent(Event.button);
-            Rect.HandleEvent(Event);
+            UIManager.HandleEvent(Event);
             if (Event.type == SDL_EVENT_QUIT) IsRunning = false;
         }
 
         // Renders
         GameWindow.Render();
 
-        Rect.Render(GameWindow.GetSurface());
+        UIManager.Render(GameWindow.GetSurface());
 
         GameWindow.Update();
     }

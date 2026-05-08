@@ -49,7 +49,7 @@ public:
     int GetHeight() const { return WindowHeight; }
 
 private: 
-    const int WindowWidth {700};
+    const int WindowWidth {710};
     const int WindowHeight {300};
     SDL_Window *SDLWindow{nullptr};
 };
