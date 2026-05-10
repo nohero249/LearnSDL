@@ -5,35 +5,15 @@
 #include "Rectangle.h"
 #include "UI.h"
 
-void HandleEvent(SDL_MouseMotionEvent& Event, Window& GameWindow)
-{
-    float DistanceFromLeft{Event.x};
-    float DistanceFromTop{Event.y};
-
-    std::cout   << "Mouse Motion Detected - " 
-                << "x: " << DistanceFromLeft
-                << ",\ty: " << DistanceFromTop << '\n' ;
-}
-
-void HandleEvent(SDL_MouseButtonEvent& Event)
-{
-    if (Event.button == SDL_BUTTON_LEFT && Event.down && Event.clicks >=2) std::cout << "Mouse Left Button Double-Clicked\n";
-    else if (Event.button == SDL_BUTTON_LEFT && Event.down && Event.clicks <2) std::cout << "Mouse Left Button Clicked\n";
-    else if (Event.type == SDL_EVENT_MOUSE_BUTTON_UP && Event.button == SDL_BUTTON_LEFT) std::cout << "Mouse Left Button Released\n";
-
-    if (Event.button == SDL_BUTTON_RIGHT && Event.down && Event.clicks >=2) std::cout << "Mouse Right Button Double-Clicked\n";
-    else if (Event.button == SDL_BUTTON_RIGHT && Event.down && Event.clicks <2) std::cout << "Mouse Right Button Clicked\n";
-    else if (Event.type == SDL_EVENT_MOUSE_BUTTON_UP && Event.button == SDL_BUTTON_RIGHT) std::cout << "Mouse Right Button Released\n";
-}
-
 int main(int, char **)
 {
     SDL_Init(SDL_INIT_VIDEO);
     Window GameWindow;
     UI UIManager;
 
-    Rectangle Rect{SDL_Rect{320, 120, 60, 60}};
-    Rect.SetColor(SDL_Color{255, 0, 0, 255});
+    Uint32 OPEN_SETTINGS{SDL_RegisterEvents(1)};
+    SDL_Event MyEvent{ .type = OPEN_SETTINGS };
+    SDL_PushEvent(&MyEvent);
 
     bool IsRunning = true;
     SDL_Event Event;
@@ -42,17 +22,14 @@ int main(int, char **)
         // Events       
         while (SDL_PollEvent(&Event))
         { 
-            // if (Event.type == SDL_EVENT_MOUSE_MOTION) HandleEvent(Event.motion, GameWindow); 
-            // if (Event.type == SDL_EVENT_MOUSE_BUTTON_UP || SDL_EVENT_MOUSE_BUTTON_DOWN) HandleEvent(Event.button);
             UIManager.HandleEvent(Event);
             if (Event.type == SDL_EVENT_QUIT) IsRunning = false;
+            else if (Event.type == OPEN_SETTINGS) std::cout << "User wants to open the settings menu\n";
         }
 
         // Renders
         GameWindow.Render();
-
         UIManager.Render(GameWindow.GetSurface());
-
         GameWindow.Update();
     }
 

@@ -7,7 +7,7 @@ public:
     Window()
     {
         SDLWindow = SDL_CreateWindow(
-            "Hello Window",
+            "Learn SDL",
             GetWidth(),
             GetHeight(), 
             0);
@@ -49,7 +49,7 @@ public:
     int GetHeight() const { return WindowHeight; }
 
 private: 
-    const int WindowWidth {710};
-    const int WindowHeight {300};
+    const int WindowWidth {800};
+    const int WindowHeight {400};
     SDL_Window *SDLWindow{nullptr};
 };

@@ -1,35 +1,25 @@
 #pragma once
 #include <SDL3/SDL.h>
-#include <vector>
-#include <memory>
 #include "Rectangle.h"
 #include "Button.h"
+#include "SettingsMenu.h"
 
 class UI
 {
 public:
     void Render(SDL_Surface* Surface) const
     {
-        A.Render(Surface);
-        B.Render(Surface);
-        C.Render(Surface);
+        SettingsButton.Render(Surface);
+        Settings.Render(Surface);
     }
 
     void HandleEvent(SDL_Event& E)
     {
-        A.HandleEvent(E);
-        B.HandleEvent(E);
-        C.HandleEvent(E);
-    }
-
-    void SetRectangleColors(const SDL_Color& Color)
-    {
-        A.SetColor(Color);
-        B.SetColor(Color);
+         SettingsButton.HandleEvent(E);
+         Settings.HandleEvent(E);
     }
 
 private:
-    Rectangle A{SDL_Rect{50, 50, 50, 50}};
-    Rectangle B{SDL_Rect{150, 50, 50, 50}};
-    Button C{*this, SDL_Rect{250, 50, 50, 50}};
+    Button SettingsButton{{50, 50, 150, 50}};
+    SettingsMenu Settings;
 };
