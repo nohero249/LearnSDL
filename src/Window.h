@@ -50,6 +50,6 @@ public:
 
 private: 
     const int WindowWidth {800};
-    const int WindowHeight {400};
+    const int WindowHeight {300};
     SDL_Window *SDLWindow{nullptr};
 };
